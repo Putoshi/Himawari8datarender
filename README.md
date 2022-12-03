@@ -2,7 +2,7 @@
 Test
 A program to generate pictures from HSD file
 
-now only support Himawari8  
+Himawari8  HSD file only
 
 因为老电脑用不了Python所以拿C#写了个程序
 
