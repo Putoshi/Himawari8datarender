@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make:*)",
+      "Bash(cmd /c \"dir \\\"C:\\\\Program Files\\\\netCDF 4.9.3\\\\lib\\\" /b\")"
+    ],
+    "deny": []
+  }
+}

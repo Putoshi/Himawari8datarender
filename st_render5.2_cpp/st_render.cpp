@@ -537,7 +537,7 @@ byte TYdownloadHimawari89(TYinfo* ty,char* band)
 			strcat(url,"0");
 		}
 		strcat(url,itoc(ty->H));
-		strcat(url,"");
+		url[strlen(url)] = '\0'; // 文字列の終端を明示的に設定
 		if(ty->MIN<10)
 		{
 			strcat(url,"0");
@@ -794,6 +794,7 @@ int TYrender(TYinfo* ty,int color)//unknown bug:crash when start execute->fixed:
 	case 1:{hppixels=TtoBD(dt.temp,dt.w*dt.h);break;}
 	case 2:{hppixels=TtoColor2(dt.temp,dt.w*dt.h);break;}
 	case 3:{hppixels=TtoWVNRL(dt.temp,dt.w*dt.h);break;}
+	default:{hppixels=BW(dt.data,dt.w*dt.h,dt.bitnum);}
 	}
 	}
 	else{
@@ -818,9 +819,23 @@ int ATyphoon()
 	int color;
 
 	printf("Enter b-deck file name:");
-	gets(filename);
+	// gets(filename);
+	if (fgets(filename, sizeof(filename), stdin) != NULL) {
+		// 改行文字を除去
+		size_t len = strlen(filename);
+		if (len > 0 && filename[len - 1] == '\n') {
+			filename[len - 1] = '\0';
+		}
+	}
 	printf("Enter band(6-16):");
-	gets(band);
+	// gets(band);
+	if (fgets(band, sizeof(band), stdin) != NULL) {
+		// 改行文字を除去
+		size_t len = strlen(band);
+		if (len > 0 && band[len - 1] == '\n') {
+			band[len - 1] = '\0';
+		}
+	}
 	printf("Enter colorscale:");
 	colorscale=getchar();
 	color=ctoibit(colorscale);

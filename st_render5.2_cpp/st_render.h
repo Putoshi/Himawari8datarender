@@ -8,10 +8,12 @@
 #include <math.h>
 #include <Windows.h>
 #include <UrlMon.h>
+#ifndef NO_NETCDF
 #include <netcdf.h>
+#pragma comment(lib,"netcdf.lib")
+#endif
 #include  "lodepng.h"
 #include <exception>
-#pragma comment(lib,"netcdf.lib")
 #pragma comment(lib,"UrlMon.lib")
 typedef unsigned char byte;
 typedef unsigned int UInt32;

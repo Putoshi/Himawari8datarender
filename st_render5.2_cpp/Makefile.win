@@ -1,0 +1,36 @@
+# Makefile for st_render5_cpp on Windows
+# Requires: MinGW-w64 or MSVC, netCDF library
+
+# Compiler settings
+CC = g++
+CFLAGS = -Wall -O2 -std=c++11 -DWIN32
+LDFLAGS = -lnetcdf -lurlmon -lwinmm -static-libgcc -static-libstdc++
+
+# NetCDF paths (adjust if installed elsewhere)
+NETCDF_PATH = C:/Program Files/netCDF 4.9.3
+INCLUDES = -I"$(NETCDF_PATH)/include"
+LIBPATHS = -L"$(NETCDF_PATH)/lib"
+
+# Source files
+SOURCES = main.cpp st_render.cpp colorscale.cpp lodepng.cpp others.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+TARGET = st_render5_cpp.exe
+
+# Build target
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(TARGET) $(LIBPATHS) $(LDFLAGS)
+
+# Compile source files
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Clean
+clean:
+	del /F $(OBJECTS) $(TARGET) 2>NUL
+
+# Dependencies
+main.o: main.cpp st_render.h
+st_render.o: st_render.cpp st_render.h lodepng.h
+colorscale.o: colorscale.cpp st_render.h
+lodepng.o: lodepng.cpp lodepng.h
+others.o: others.cpp st_render.h
